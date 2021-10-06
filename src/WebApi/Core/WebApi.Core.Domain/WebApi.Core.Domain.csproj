@@ -1,0 +1,10 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <AssemblyName>BookStore.WebApi.Core.Domain</AssemblyName>
+    <RootNamespace>WebApi.Core.Domain</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\BuildingBlocks\Entities\Framework.Entities\Framework.Entities.csproj" />
+  </ItemGroup>
+</Project>

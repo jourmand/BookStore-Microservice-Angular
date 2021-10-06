@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <AssemblyName>BookStore.Oauth.Core.Domain</AssemblyName>
+    <RootNamespace>Oauth.Core.Domain</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="RsjFramework.Entities" Version="1.0.6" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\01. BuildingBlocks\Tools\Framework.Tools\Framework.Tools.csproj" />
+  </ItemGroup>
+
+</Project>

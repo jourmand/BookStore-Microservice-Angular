@@ -1,0 +1,19 @@
+<div class="container">
+  <header class="jumbotron">
+    <h2>Book List</h2>
+    <div class="row">
+      <div *ngFor="let item of content" class="col-md-4 mt-3">
+        <div class="card bg-primary text-white">
+          <div class="card-header">
+            Book Info
+          </div>
+          <div class="card-body">
+            <h3>Title: {{item.name}}</h3>
+            <h4>Price: {{item.price}}$</h4>
+            <button class="btn btn-warning btn-sm mr-2" (click)="subscribe(item.id)">Subscribe</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+</div>
