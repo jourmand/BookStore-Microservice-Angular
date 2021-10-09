@@ -5,7 +5,7 @@ using WebApi.Core.Domain.Exceptions;
 
 namespace WebApi.Core.Domain.ApplicationUserAggregate.ValueObjects
 {
-    public class ApplicationUserId : BaseValueObject<ApplicationUserId>
+    public class ApplicationUserId : Value<ApplicationUserId>
     {
         public Guid Value { get; private set; }
         public ApplicationUserId(Guid value)
@@ -36,10 +36,6 @@ namespace WebApi.Core.Domain.ApplicationUserAggregate.ValueObjects
 
             return new ApplicationUserId(userDetail.Id);
         }
-
-        protected override int GetHashCodeCore() => Value.GetHashCode();
-
-        protected override bool IsEqual(ApplicationUserId other) => Value == other.Value;
 
         public static implicit operator Guid(ApplicationUserId value) => value.Value;
 

@@ -1,12 +1,11 @@
-﻿using System;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 using WebApi.Core.Domain.ApplicationUserAggregate.Contracts;
 using WebApi.Core.Domain.Commons;
 using WebApi.Core.Domain.Exceptions;
 
 namespace WebApi.Core.Domain.ApplicationUserAggregate.ValueObjects
 {
-    public class Email : BaseValueObject<Email>
+    public class Email : Value<Email>
     {
         public string Value { get; private set; }
         public Email(string value)
@@ -26,10 +25,6 @@ namespace WebApi.Core.Domain.ApplicationUserAggregate.ValueObjects
 
             return new Email(email);
         }
-
-        protected override int GetHashCodeCore() => Value.GetHashCode();
-
-        protected override bool IsEqual(Email other) => Value.Equals(other.Value, StringComparison.InvariantCultureIgnoreCase);
 
         public static implicit operator string(Email value) => value.Value;
     }

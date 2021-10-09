@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
+using BuildingBlocks.Framework.Entities;
 using Endpoints.WebApi.ViewModels.v1.Book;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -27,6 +28,8 @@ namespace Endpoints.WebApi.Controllers.v1
 
         [Authorize(Policy = "seller")]
         [HttpPost]
+        [ProducesResponseType((int)HttpStatusCode.Forbidden)]
+        [ProducesResponseType(typeof(ErrorDetails), (int)HttpStatusCode.BadRequest)]
         [ProducesResponseType(typeof(CreateBookItemDto), (int)HttpStatusCode.Created)]
         public async Task<IActionResult> Post(AddBookModel model)
         {
@@ -40,6 +43,8 @@ namespace Endpoints.WebApi.Controllers.v1
         }
 
         [HttpGet("{id}")]
+        [ProducesResponseType((int)HttpStatusCode.Forbidden)]
+        [ProducesResponseType(typeof(ErrorDetails), (int)HttpStatusCode.BadRequest)]
         [ProducesResponseType(typeof(GetBookItemDetailDto), (int)HttpStatusCode.OK)]
         public async Task<GetBookItemDetailDto> Get(string id)
         {
@@ -48,6 +53,8 @@ namespace Endpoints.WebApi.Controllers.v1
         }
 
         [HttpGet]
+        [ProducesResponseType((int)HttpStatusCode.Forbidden)]
+        [ProducesResponseType(typeof(ErrorDetails), (int)HttpStatusCode.BadRequest)]
         [ProducesResponseType(typeof(List<GetBookItemsDto>), (int)HttpStatusCode.OK)]
         public async Task<List<GetBookItemsDto>> Books()
         {

@@ -83,7 +83,7 @@ namespace Endpoints.WebApi.Extensions
                 app.UseSwagger()
                     .UseSwaggerUI(c =>
                     {
-                        c.SwaggerEndpoint($"/swagger/v1/swagger.json", "BookStore V1");
+                        c.SwaggerEndpoint("/swagger/v1/swagger.json", "BookStore V1");
                     });
 
             return app;
@@ -104,7 +104,7 @@ namespace Endpoints.WebApi.Extensions
                 .CreateScope();
 
             using var logContext = serviceScope.ServiceProvider.GetService<BookStoreDbContext>();
-            logContext.Database.Migrate();
+            logContext?.Database.Migrate();
         }
     }
 }

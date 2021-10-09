@@ -15,7 +15,7 @@ namespace BookStore.Endpoints.Oauth.Extensions
         {
             return new()
             {
-                new ApiResource("BookStore", "Book Store", new string[] { JwtClaimTypes.Name, JwtClaimTypes.FamilyName })
+                new ApiResource("BookStore", "Book Store", new[] { JwtClaimTypes.Name, JwtClaimTypes.FamilyName })
                 {
                     ApiSecrets = new List<Secret> { new("resource-secret".Sha256()) },
                     Scopes = new List<string> { "seller", "guest" }
@@ -39,7 +39,7 @@ namespace BookStore.Endpoints.Oauth.Extensions
                 new Client
                 {
                     ClientId = "angular-client",
-                    ClientSecrets = new List<Secret>{new("angular-secret".Sha256())},
+                    ClientSecrets = new List<Secret> { new("angular-secret".Sha256()) },
                     AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
                     AllowedScopes = new List<string>
                     {
@@ -50,7 +50,7 @@ namespace BookStore.Endpoints.Oauth.Extensions
                     AlwaysSendClientClaims = true,
                     AlwaysIncludeUserClaimsInIdToken = true,
                     IncludeJwtId = false,
-                    RequireClientSecret=false,
+                    RequireClientSecret = false,
                     AccessTokenType = AccessTokenType.Jwt
                 },
                 new Client

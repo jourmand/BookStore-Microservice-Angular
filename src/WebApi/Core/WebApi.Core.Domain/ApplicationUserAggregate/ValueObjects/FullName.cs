@@ -1,10 +1,9 @@
-﻿using System;
-using WebApi.Core.Domain.Commons;
+﻿using WebApi.Core.Domain.Commons;
 using WebApi.Core.Domain.Exceptions;
 
 namespace WebApi.Core.Domain.ApplicationUserAggregate.ValueObjects
 {
-    public class FullName : BaseValueObject<FullName>
+    public class FullName : Value<FullName>
     {
         public string FirstName { get; private set; }
         public string LastName { get; private set; }
@@ -28,12 +27,6 @@ namespace WebApi.Core.Domain.ApplicationUserAggregate.ValueObjects
             
             return new FullName(firstName, lastName);
         }
-
-        protected override int GetHashCodeCore() => FirstName.GetHashCode() + LastName.GetHashCode();
-
-        protected override bool IsEqual(FullName other) =>
-            FirstName.Equals(other.FirstName, StringComparison.InvariantCultureIgnoreCase) && 
-            LastName.Equals(other.LastName, StringComparison.InvariantCultureIgnoreCase);
 
         public override string ToString() =>
             $"{FirstName ?? ""} {LastName ?? ""}";

@@ -2,9 +2,11 @@
 using System.Linq;
 using System.Reflection;
 using System.Text.Json;
+using BuildingBlocks.Framework.WebToolkit.Attributes;
 using MassTransit;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -35,6 +37,9 @@ namespace Endpoints.WebApi.Extensions
            
             services.AddScoped<IDomainEventHandlingExecutor, DomainEventHandlingExecutor>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+            services.AddSingleton<IAuthorizationPolicyProvider, AuthorizationPolicyProvider>();
+            services.AddSingleton<IAuthorizationHandler, HasScopeHandler>();
 
             services.Scan(s => s.FromAssemblies(Assembly.Load(typeof(BookStoreDbContext).GetTypeInfo().Assembly.GetName().Name),
                     Assembly.Load(typeof(CreateBookItemCommand).GetTypeInfo().Assembly.GetName().Name),
@@ -149,11 +154,19 @@ namespace Endpoints.WebApi.Extensions
                     });
                     options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                     {
-                        Description = "JWT Authorization header using the Bearer scheme (Example: 'Bearer 12345abcdef')",
-                        Name = "Authorization",
+                        Scheme = "Bearer",
                         In = ParameterLocation.Header,
-                        Type = SecuritySchemeType.ApiKey,
-                        Scheme = "Bearer"
+                        Description = "Please insert JWT with Bearer into field",
+                        Name = "Authorization",
+                        Type = SecuritySchemeType.OAuth2,
+                        Flows = new OpenApiOAuthFlows
+                        {
+                            Password = new OpenApiOAuthFlow
+                            {
+                                AuthorizationUrl = new Uri($"{configuration["Jwt:Authority"]}connect/authorize"),
+                                TokenUrl = new Uri($"{configuration["Jwt:Authority"]}connect/token"),
+                            }
+                        }
                     });
                     options.AddSecurityRequirement(new OpenApiSecurityRequirement
                     {

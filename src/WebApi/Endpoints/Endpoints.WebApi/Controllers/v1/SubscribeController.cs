@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
+using BuildingBlocks.Framework.Entities;
 using WebApi.Core.ApplicationService.Commands.BookAggregate.CreateBookItem;
 using WebApi.Core.ApplicationService.Commands.BookAggregate.SubscribeBookItem;
 using WebApi.Core.ApplicationService.Commands.BookAggregate.UnsubscribeBookItem;
@@ -26,26 +27,32 @@ namespace Endpoints.WebApi.Controllers.v1
         }
 
         [HttpPost]
+        [ProducesResponseType((int)HttpStatusCode.Forbidden)]
+        [ProducesResponseType(typeof(ErrorDetails), (int)HttpStatusCode.BadRequest)]
         [ProducesResponseType(typeof(CreateBookItemDto), (int)HttpStatusCode.Created)]
         public async Task<IActionResult> Post(SubscribeBookModel model)
         {
-            var result = await _mediator.Send(new SubscribeBookItemCommand(model.BookId, User.Identity.Name));
+            var result = await _mediator.Send(new SubscribeBookItemCommand(model.BookId, User.Identity?.Name));
             return CreatedAtAction(nameof(Get), new { id = result.Id }, result);
         }
 
         [HttpDelete("{id}")]
+        [ProducesResponseType((int)HttpStatusCode.Forbidden)]
+        [ProducesResponseType(typeof(ErrorDetails), (int)HttpStatusCode.BadRequest)]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         public async Task<IActionResult> Get(string id)
         {
-            var result = await _mediator.Send(new UnsubscribeBookItemCommand(id, User.Identity.Name));
+            var result = await _mediator.Send(new UnsubscribeBookItemCommand(id, User.Identity?.Name));
             return Ok();
         }
 
         [HttpGet]
+        [ProducesResponseType((int)HttpStatusCode.Forbidden)]
+        [ProducesResponseType(typeof(ErrorDetails), (int)HttpStatusCode.BadRequest)]
         [ProducesResponseType(typeof(List<GetUserBookSubscriptionsDto>), (int)HttpStatusCode.OK)]
         public async Task<List<GetUserBookSubscriptionsDto>> Subscribes()
         {
-            var result = await _mediator.Send(new GetUserBookSubscriptionsQuery(User.Identity.Name));
+            var result = await _mediator.Send(new GetUserBookSubscriptionsQuery(User.Identity?.Name));
             return result;
         }
     }

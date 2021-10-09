@@ -3,7 +3,7 @@ using WebApi.Core.Domain.Exceptions;
 
 namespace WebApi.Core.Domain.BookAggregate.ValueObjects
 {
-    public class BookPrice : BaseValueObject<BookPrice>
+    public class BookPrice : Value<BookPrice>
     {
         public decimal Value { get; private set; }
         public BookPrice(decimal value)
@@ -17,10 +17,6 @@ namespace WebApi.Core.Domain.BookAggregate.ValueObjects
                 throw new DomainExceptions.InvalidEntityState("Price value not valid");
             return new BookPrice(price);
         }
-
-        protected override int GetHashCodeCore() => Value.GetHashCode();
-
-        protected override bool IsEqual(BookPrice other) => Value == other.Value;
 
         public static implicit operator decimal(BookPrice value) => value.Value;
     }
